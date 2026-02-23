@@ -40,4 +40,13 @@ public class PostRepository {
                 })
                 .orElse(null);
     }
+
+    public void save(Post post) {
+        long nextId = posts.stream()
+                .mapToLong(Post::getNo)
+                .max()
+                .orElse(0L) + 1;
+        post.setNo(nextId);
+        posts.add(post);
+    }
 }
