@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Post List | Vibe Coding</title>
+    <title>New Post | Vibe Coding</title>
     <!-- Google Fonts: Space Grotesk -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
         rel="stylesheet" />
@@ -84,69 +84,57 @@
                         <a class="text-sm font-semibold hover:text-primary transition-colors" href="#">Community</a>
                     </nav>
                 </div>
-                <div class="flex items-center gap-4">
-                    <button
-                        class="flex items-center justify-center px-6 h-11 bg-primary text-white rounded-xl font-bold text-sm shadow-lg shadow-primary/25 hover:scale-105 transition-all active:scale-95">
-                        Get Started
-                    </button>
-                </div>
             </div>
         </header>
 
-        <main class="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
-            <div class="mb-12 flex items-end justify-between">
-                <div>
-                    <h1 class="text-4xl font-black mb-4 tracking-tight">Community <span
-                            class="text-primary italic">Vibes</span></h1>
-                    <p class="text-slate-600 dark:text-slate-400">Discover what's happening in our creative oasis.</p>
-                </div>
-                <a href="/posts/new"
-                    class="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-2xl font-bold shadow-lg shadow-primary/25 hover:scale-105 transition-all active:scale-95">
-                    <span class="material-symbols-outlined">add_circle</span>
-                    새 글
-                </a>
+        <main class="flex-1 max-w-2xl mx-auto px-6 py-12 w-full">
+            <div class="mb-10 text-center">
+                <h1 class="text-4xl font-black mb-4 tracking-tight">Share Your <span
+                        class="text-primary italic">Vibe</span></h1>
+                <p class="text-slate-600 dark:text-slate-400">Capture your thoughts in our cozy creative space.</p>
             </div>
 
-            <!-- Posts Table -->
             <div
-                class="bg-white/80 dark:bg-slate-900/80 backdrop-blur rounded-[2rem] shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden">
-                <table class="w-full text-left">
-                    <thead>
-                        <tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700">
-                            <th class="px-8 py-6 text-sm font-black uppercase tracking-widest text-slate-500">No.</th>
-                            <th class="px-8 py-6 text-sm font-black uppercase tracking-widest text-slate-500">Title</th>
-                            <th class="px-8 py-6 text-sm font-black uppercase tracking-widest text-slate-500">Created At
-                            </th>
-                            <th class="px-8 py-6 text-sm font-black uppercase tracking-widest text-slate-500">Views</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-                        <tr th:each="post : ${posts}" class="hover:bg-primary/5 transition-colors group">
-                            <td class="px-8 py-6 font-bold text-slate-400" th:text="${post.no}">1</td>
-                            <td class="px-8 py-6">
-                                <a th:href="@{/posts/{no}(no=${post.no})}"
-                                    class="text-lg font-bold group-hover:text-primary transition-colors"
-                                    th:text="${post.title}">Post Title</a>
-                            </td>
-                            <td class="px-8 py-6 text-slate-500"
-                                th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2024-03-24</td>
-                            <td class="px-8 py-6">
-                                <span
-                                    class="inline-flex items-center gap-1 px-3 py-1 bg-mint text-teal-700 rounded-full text-xs font-bold"
-                                    th:text="${post.views}">123</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                class="bg-white/80 dark:bg-slate-900/80 backdrop-blur rounded-[2.5rem] shadow-2xl border border-slate-100 dark:border-slate-800 p-8 md:p-10">
+                <form onsubmit="alert('새 게시글 등록'); return false;" class="space-y-8">
+                    <div class="space-y-3">
+                        <label for="title"
+                            class="block text-sm font-black uppercase tracking-widest text-slate-400 ml-1">Title</label>
+                        <input type="text" id="title" name="title" required
+                            placeholder="Give your post a beautiful name..."
+                            class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl focus:ring-4 focus:ring-primary/20 text-lg font-bold placeholder:text-slate-300 dark:placeholder:text-slate-600 transition-all" />
+                    </div>
+
+                    <div class="space-y-3">
+                        <label for="content"
+                            class="block text-sm font-black uppercase tracking-widest text-slate-400 ml-1">Content</label>
+                        <textarea id="content" name="content" required rows="8"
+                            placeholder="What's on your creative mind today?"
+                            class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl focus:ring-4 focus:ring-primary/20 text-lg leading-relaxed placeholder:text-slate-300 dark:placeholder:text-slate-600 transition-all resize-none"></textarea>
+                    </div>
+
+                    <div class="flex items-center gap-4 pt-4">
+                        <button type="submit"
+                            class="flex-1 flex items-center justify-center gap-2 px-8 h-14 bg-primary text-white rounded-2xl font-black text-lg shadow-xl shadow-primary/30 hover:scale-105 hover:bg-primary/90 transition-all active:scale-95">
+                            <span class="material-symbols-outlined">send</span>
+                            등록하기
+                        </button>
+                        <a href="/posts"
+                            class="flex-1 flex items-center justify-center gap-2 px-8 h-14 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-2xl font-black text-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-all active:scale-95">
+                            취소
+                        </a>
+                    </div>
+                </form>
             </div>
         </main>
 
-        <!-- Footer (Simplified) -->
-        <footer class="pt-16 pb-8 border-t border-slate-100 dark:border-slate-800">
-            <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-                <p class="text-sm text-slate-400">© 2024 Vibe Coding Inc.</p>
-                <p class="text-sm text-slate-400 flex items-center gap-1">Made with <span
-                        class="material-symbols-outlined text-xs text-red-400">favorite</span></p>
+        <!-- Footer -->
+        <footer class="pt-16 pb-8 border-t border-slate-100 dark:border-slate-800 mt-12">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <p class="text-sm text-slate-400 flex items-center justify-center gap-1">
+                    Made with <span class="material-symbols-outlined text-xs text-red-400">favorite</span> by Vibe
+                    Coding
+                </p>
             </div>
         </footer>
     </div>

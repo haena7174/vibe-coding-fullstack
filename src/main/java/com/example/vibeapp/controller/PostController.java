@@ -33,4 +33,9 @@ public class PostController {
         model.addAttribute("post", post);
         return "post_detail";
     }
+
+    @GetMapping("/posts/new")
+    public String createPostForm() {
+        return "post_new_form";
+    }
 }
