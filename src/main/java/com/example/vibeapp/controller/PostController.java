@@ -5,6 +5,7 @@ import com.example.vibeapp.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -21,5 +22,15 @@ public class PostController {
         List<Post> posts = postService.getAllPosts();
         model.addAttribute("posts", posts);
         return "posts";
+    }
+
+    @GetMapping("/posts/{no}")
+    public String viewPost(@PathVariable("no") Long no, Model model) {
+        Post post = postService.getPost(no);
+        if (post == null) {
+            return "redirect:/posts";
+        }
+        model.addAttribute("post", post);
+        return "post_detail";
     }
 }
