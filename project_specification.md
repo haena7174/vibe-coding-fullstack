@@ -4,8 +4,8 @@
 
 ## 1. 프로젝트 개요
 - **프로젝트 명:** VibeApp
-- **설명:** 최소 기능 스프링부트 애플리케이션을 생성하는 프로젝트다.
-- **목표:** 최신 기술 스택을 활용한 기본적인 스프링부트 환경 구축 및 게시판 기능 구현.
+- **설명:** 게시판 기능을 제공하는 pure REST API 서버 프로젝트다.
+- **목표:** 최신 기술 스택을 활용한 RESTful API 구축 및 OpenAPI를 통한 문서화.
 
 ## 2. 환경 설정 (확정)
 | 항목 | 요구사항 | 현재 상태 |
@@ -23,8 +23,7 @@
 - **버전:** `0.0.1-SNAPSHOT`
 - **메인 클래스:** `com.example.vibeapp.VibeApp`
 - **패키지 구조:** 기능 기반 구조 (Feature-based Package Structure)
-    - `com.example.vibeapp.home`: 홈 화면 관련 컨트롤러 (`HomeController`)
-    - `com.example.vibeapp.post`: 게시글 도메인, 서비스, 리포지토리, 컨트롤러
+    - `com.example.vibeapp.post`: 게시글 도메인, 서비스, 리포지토리, 컨트롤러 (REST API)
 
 ## 4. 빌드 구성 (`build.gradle`)
 ### 플러그인
@@ -32,15 +31,12 @@
 - `java`
 
 ### 핵심 의존성
-- `spring-boot-starter-web`
-- `spring-boot-starter-thymeleaf`
+- `spring-boot-starter-web` (REST API 전용)
 - `spring-boot-starter-validation` (Bean Validation)
 - `spring-boot-starter-test` (테스트용)
 
 ## 5. 아키텍처 및 설계 원칙
-- **기능형 패키지/템플릿 구조**: 연관된 기능(Home, Post)끼리 자바 클래스와 뷰 템플릿을 묶어서 관리. (실제 구조 확인됨)
     - 자바: `src/main/java/com/example/vibeapp/{feature}/`
-    - 템플릿: `src/main/resources/templates/{feature}/`
 - **DTO 패턴 적용**: 엔티티를 직접 노출하지 않고 DTO(Data Transfer Object)를 통해 데이터를 전달.
     - 정적 팩토리 메서드 `from()`을 통한 엔티티 → DTO 변환.
     - DTO 내부 `toEntity()` 또는 `updateEntity()`를 통한 DTO → 엔티티 변환/업데이트.
@@ -50,11 +46,11 @@
 
 ## 6. 주요 기능 현황 (업데이트됨)
 - **[구현 완료] 게시글 관리 (Post CRUD)**:
-    - 목록 보기 (`/posts`)
-    - 상세 조회 (`/posts/{id}`)
-    - 새 글 작성 (`/posts/new`, `/posts/add`)
-    - 수정 (`/posts/{id}/edit`, `/posts/{id}/save`)
-    - 삭제 (`/posts/{id}/delete`)
+    - 목록 보기 (`/api/posts`)
+    - 상세 조회 (`/api/posts/{id}`)
+    - 새 글 작성 (`/api/posts`, POST)
+    - 수정 (`/api/posts/{id}`, PATCH)
+    - 삭제 (`/api/posts/{id}`, DELETE)
 - **[구현 완료] 페이징 처리**:
     - 게시글 목록 하단에 페이지 내비게이션 포함.
     - 페이지당 5개씩 출력, 현재 10개의 테스트 데이터 로드됨.
