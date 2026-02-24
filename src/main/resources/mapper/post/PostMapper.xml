@@ -4,30 +4,30 @@
 <mapper namespace="com.example.vibeapp.post.PostRepository">
 
     <select id="findAll" resultType="com.example.vibeapp.post.Post">
-        SELECT * FROM POST ORDER BY id DESC
+        SELECT * FROM POSTS ORDER BY id DESC
     </select>
 
     <select id="count" resultType="long">
-        SELECT COUNT(*) FROM POST
+        SELECT COUNT(*) FROM POSTS
     </select>
 
     <select id="findPage" resultType="com.example.vibeapp.post.Post">
-        SELECT * FROM POST 
+        SELECT * FROM POSTS 
         ORDER BY id DESC 
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <select id="findById" resultType="com.example.vibeapp.post.Post">
-        SELECT * FROM POST WHERE id = #{id}
+        SELECT * FROM POSTS WHERE id = #{id}
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO POST (title, content, created_at, views)
+        INSERT INTO POSTS (title, content, created_at, views)
         VALUES (#{title}, #{content}, #{createdAt}, #{views})
     </insert>
 
     <update id="update">
-        UPDATE POST
+        UPDATE POSTS
         SET title = #{title},
             content = #{content},
             updated_at = #{updatedAt}
@@ -35,11 +35,11 @@
     </update>
 
     <delete id="deleteById">
-        DELETE FROM POST WHERE id = #{id}
+        DELETE FROM POSTS WHERE id = #{id}
     </delete>
 
     <update id="incrementViews">
-        UPDATE POST SET views = views + 1 WHERE id = #{id}
+        UPDATE POSTS SET views = views + 1 WHERE id = #{id}
     </update>
 
 </mapper>
