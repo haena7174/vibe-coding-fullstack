@@ -1,0 +1,37 @@
+﻿Initialized native services in: C:\Users\haena\.gradle\native
+Initialized jansi services in: C:\Users\haena\.gradle\native
+The client will now receive all logging from the daemon (pid: 28300). The daemon log file: C:\Users\haena\.gradle\daemon\8.12\daemon-28300.out.log
+Starting 3rd build in daemon [uptime: 5 mins 1.825 secs, performance: 99%, GC rate: 0.00/s, heap usage: 0% of 512 MiB, non-heap usage: 9% of 384 MiB]
+Using 12 worker leases.
+Now considering [C:\Users\haena\vibe-coding-fullstack] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Starting Build
+Caching disabled for Groovy DSL script compilation (settings) because:
+  Build cache is disabled
+  Not worth caching.
+Compiling settings file 'C:\Users\haena\vibe-coding-fullstack\settings.gradle' using BuildScriptTransformer.
+./gradlew : 
+위치 줄:1 문자:1
++ ./gradlew bootRun --info > last_run.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [
+    ], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+BUG! exception in phase 'semantic analysis' in source u
+nit '_BuildScript_' Unsupported class file major versio
+n 69
+> Unsupported class file major version 69
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 998ms
+Watched directory hierarchies: []

@@ -17,6 +17,17 @@ spring:
     init:
       mode: always
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    groups-order: desc
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
   jpa:
     hibernate:
       ddl-auto: validate
