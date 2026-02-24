@@ -1,5 +1,9 @@
 package com.example.vibeapp.post;
 
+import com.example.vibeapp.post.dto.PostCreateDto;
+import com.example.vibeapp.post.dto.PostListDto;
+import com.example.vibeapp.post.dto.PostResponseDTO;
+import com.example.vibeapp.post.dto.PostUpdateDto;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,32 +21,35 @@ public class PostService {
         return postRepository.count();
     }
 
-    public List<Post> getPostsPage(int page, int size) {
+    public List<PostListDto> getPostsPage(int page, int size) {
         int offset = (page - 1) * size;
-        return postRepository.findPage(offset, size);
+        List<Post> posts = postRepository.findPage(offset, size);
+        return posts.stream()
+                .map(PostListDto::from)
+                .toList();
     }
 
-    public Post getPost(Long id) {
-        return postRepository.findById(id);
+    public PostResponseDTO getPost(Long id) {
+        Post post = postRepository.findById(id);
+        return (post != null) ? PostResponseDTO.from(post) : null;
     }
 
-    public void createPost(String title, String content) {
-        Post post = new Post();
-        post.setTitle(title);
-        post.setContent(content);
-        post.setCreatedAt(LocalDateTime.now());
-        post.setUpdatedAt(null);
-        post.setViews(0);
+    public void createPost(PostCreateDto createDto) {
+        Post post = createDto.toEntity();
         postRepository.save(post);
     }
 
-    public void updatePost(Long id, String title, String content) {
+    public void updatePost(Long id, PostUpdateDto updateDto) {
         Post post = postRepository.findById(id);
         if (post != null) {
-            post.setTitle(title);
-            post.setContent(content);
+            updateDto.updateEntity(post);
             post.setUpdatedAt(LocalDateTime.now());
         }
+    }
+
+    public PostUpdateDto getPostForEdit(Long id) {
+        Post post = postRepository.findById(id);
+        return (post != null) ? PostUpdateDto.from(post) : null;
     }
 
     public void deletePost(Long id) {

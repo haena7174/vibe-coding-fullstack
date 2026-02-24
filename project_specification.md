@@ -34,12 +34,17 @@
 ### 핵심 의존성
 - `spring-boot-starter-web`
 - `spring-boot-starter-thymeleaf`
+- `spring-boot-starter-validation` (Bean Validation)
 - `spring-boot-starter-test` (테스트용)
 
 ## 5. 아키텍처 및 설계 원칙
 - **기능형 패키지/템플릿 구조**: 연관된 기능(Home, Post)끼리 자바 클래스와 뷰 템플릿을 묶어서 관리. (실제 구조 확인됨)
     - 자바: `src/main/java/com/example/vibeapp/{feature}/`
     - 템플릿: `src/main/resources/templates/{feature}/`
+- **DTO 패턴 적용**: 엔티티를 직접 노출하지 않고 DTO(Data Transfer Object)를 통해 데이터를 전달.
+    - 정적 팩토리 메서드 `from()`을 통한 엔티티 → DTO 변환.
+    - DTO 내부 `toEntity()` 또는 `updateEntity()`를 통한 DTO → 엔티티 변환/업데이트.
+- **Bean Validation**: 입력 데이터 검증을 위해 JSR-380 어노테이션(`@NotBlank`, `@Size` 등) 적용.
 - **리포지토리**: 현재 인메모리(Memory) 기반 리포지토리(`PostRepository`)를 사용하여 초기 데이터 시딩(10개) 및 CRUD 수행.
 - **명명 규칙**: 컨트롤러와 서비스 간 일관된 메서드 명칭 사용 (`listPosts`, `viewPost`, `createPost`, `updatePost`, `deletePost`).
 
