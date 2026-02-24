@@ -62,6 +62,10 @@ public class PostService {
         return (post != null) ? PostUpdateDto.from(post) : null;
     }
 
+    public List<PostTag> getTagsByPostId(Long postId) {
+        return postTagRepository.findByPostNo(postId);
+    }
+
     public void deletePost(Long id) {
         postTagRepository.deleteByPostNo(id);
         postRepository.deleteById(id);

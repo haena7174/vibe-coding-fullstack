@@ -125,8 +125,18 @@
             <article
                 class="bg-white/80 dark:bg-slate-900/80 backdrop-blur rounded-[2.5rem] shadow-2xl border border-slate-100 dark:border-slate-800 p-8 md:p-12">
                 <header class="mb-10">
-                    <h1 class="text-4xl md:text-5xl font-black mb-6 tracking-tight leading-tight"
+                    <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight leading-tight"
                         th:text="${post.title}">Post Title</h1>
+
+                    <!-- Tags -->
+                    <div class="flex flex-wrap gap-2 mb-6" th:if="${tags != null and !tags.isEmpty()}">
+                        <span th:each="tag : ${tags}"
+                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary border border-primary/20"
+                            th:text="'# ' + ${tag.tagName}">
+                            #tag
+                        </span>
+                    </div>
+
                     <div class="flex flex-wrap gap-6 text-sm font-semibold text-slate-400">
                         <div class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-primary">calendar_today</span>

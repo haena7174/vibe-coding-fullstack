@@ -44,6 +44,7 @@ public class PostController {
             return "redirect:/posts";
         }
         model.addAttribute("post", post);
+        model.addAttribute("tags", postService.getTagsByPostId(id));
         return "post/post_detail";
     }
 
