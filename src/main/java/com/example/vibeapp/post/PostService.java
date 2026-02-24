@@ -66,7 +66,7 @@ public class PostService {
             return null;
         String tags = postTagRepository.findByPostNo(id).stream()
                 .map(PostTag::getTagName)
-                .reduce("", (a, b) -> a.isEmpty() ? b : a + ", ");
+                .collect(java.util.stream.Collectors.joining(", "));
         return new com.example.vibeapp.post.dto.PostUpdateDto(post.getTitle(), post.getContent(), tags);
     }
 
