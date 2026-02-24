@@ -117,6 +117,14 @@
                             class="text-red-500 text-sm font-bold ml-1">Content error</p>
                     </div>
 
+                    <div class="space-y-3">
+                        <label for="tags"
+                            class="block text-sm font-black uppercase tracking-widest text-slate-400 ml-1">Tags</label>
+                        <input type="text" id="tags" th:field="*{tags}" placeholder="e.g. spring, java, mybatis"
+                            class="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl focus:ring-4 focus:ring-primary/20 text-lg placeholder:text-slate-300 dark:placeholder:text-slate-600 transition-all" />
+                        <p class="text-xs text-slate-400 ml-1">쉼표(,)로 태그를 구분하세요.</p>
+                    </div>
+
                     <div class="flex items-center gap-4 pt-4">
                         <button type="submit"
                             class="flex-1 flex items-center justify-center gap-2 px-8 h-14 bg-primary text-white rounded-2xl font-black text-lg shadow-xl shadow-primary/30 hover:scale-105 hover:bg-primary/90 transition-all active:scale-95">

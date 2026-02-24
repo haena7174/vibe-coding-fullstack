@@ -12,9 +12,11 @@ import java.util.List;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final PostTagRepository postTagRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, PostTagRepository postTagRepository) {
         this.postRepository = postRepository;
+        this.postTagRepository = postTagRepository;
     }
 
     public long getTotalCount() {
@@ -41,6 +43,7 @@ public class PostService {
     public void createPost(PostCreateDto createDto) {
         Post post = createDto.toEntity();
         postRepository.save(post);
+        saveTags(post.getId(), createDto.tags());
     }
 
     public void updatePost(Long id, PostUpdateDto updateDto) {
@@ -49,6 +52,8 @@ public class PostService {
             updateDto.updateEntity(post);
             post.setUpdatedAt(LocalDateTime.now());
             postRepository.update(post);
+            postTagRepository.deleteByPostNo(id);
+            saveTags(id, updateDto.tags());
         }
     }
 
@@ -58,6 +63,21 @@ public class PostService {
     }
 
     public void deletePost(Long id) {
+        postTagRepository.deleteByPostNo(id);
         postRepository.deleteById(id);
+    }
+
+    private void saveTags(Long postId, String tags) {
+        if (tags == null || tags.isBlank())
+            return;
+        for (String raw : tags.split(",")) {
+            String tagName = raw.trim();
+            if (!tagName.isEmpty()) {
+                PostTag postTag = new PostTag();
+                postTag.setPostNo(postId);
+                postTag.setTagName(tagName);
+                postTagRepository.save(postTag);
+            }
+        }
     }
 }

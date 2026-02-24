@@ -7,13 +7,16 @@ import jakarta.validation.constraints.Size;
 public record PostUpdateDto(
         @NotBlank(message = "제목은 필수입니다.") @Size(max = 100, message = "제목은 100자 이내여야 합니다.") String title,
 
-        @NotBlank(message = "내용은 필수입니다.") String content) {
+        @NotBlank(message = "내용은 필수입니다.") String content,
+
+        String tags) {
+
     public PostUpdateDto() {
-        this(null, null);
+        this(null, null, null);
     }
 
     public static PostUpdateDto from(Post post) {
-        return new PostUpdateDto(post.getTitle(), post.getContent());
+        return new PostUpdateDto(post.getTitle(), post.getContent(), "");
     }
 
     public void updateEntity(Post post) {

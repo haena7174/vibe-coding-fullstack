@@ -12,4 +12,8 @@
         DELETE FROM POST_TAGS WHERE id = #{id}
     </delete>
 
+    <delete id="deleteByPostNo">
+        DELETE FROM POST_TAGS WHERE post_no = #{postNo}
+    </delete>
+
 </mapper>
