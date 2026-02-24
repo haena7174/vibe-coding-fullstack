@@ -27,7 +27,7 @@ public class PostController {
         model.addAttribute("posts", posts);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
-        return "posts";
+        return "post/posts";
     }
 
     @GetMapping("/posts/{no}")
@@ -37,12 +37,12 @@ public class PostController {
             return "redirect:/posts";
         }
         model.addAttribute("post", post);
-        return "post_detail";
+        return "post/post_detail";
     }
 
     @GetMapping("/posts/new")
     public String createPostForm() {
-        return "post_new_form";
+        return "post/post_new_form";
     }
 
     @PostMapping("/posts/add")
@@ -58,7 +58,7 @@ public class PostController {
             return "redirect:/posts";
         }
         model.addAttribute("post", post);
-        return "post_edit_form";
+        return "post/post_edit_form";
     }
 
     @PostMapping("/posts/{no}/save")
