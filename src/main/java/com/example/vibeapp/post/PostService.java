@@ -62,7 +62,12 @@ public class PostService {
 
     public PostUpdateDto getPostForEdit(Long id) {
         Post post = postRepository.findById(id);
-        return (post != null) ? PostUpdateDto.from(post) : null;
+        if (post == null)
+            return null;
+        String tags = postTagRepository.findByPostNo(id).stream()
+                .map(PostTag::getTagName)
+                .reduce("", (a, b) -> a.isEmpty() ? b : a + ", ");
+        return new com.example.vibeapp.post.dto.PostUpdateDto(post.getTitle(), post.getContent(), tags);
     }
 
     public List<PostTag> getTagsByPostId(Long postId) {
