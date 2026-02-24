@@ -46,4 +46,27 @@ public class PostController {
         postService.createPost(title, content);
         return "redirect:/posts";
     }
+
+    @GetMapping("/posts/{no}/edit")
+    public String editPostForm(@PathVariable("no") Long no, Model model) {
+        Post post = postService.getPost(no);
+        if (post == null) {
+            return "redirect:/posts";
+        }
+        model.addAttribute("post", post);
+        return "post_edit_form";
+    }
+
+    @PostMapping("/posts/{no}/save")
+    public String savePost(@PathVariable("no") Long no, @RequestParam("title") String title,
+            @RequestParam("content") String content) {
+        postService.updatePost(no, title, content);
+        return "redirect:/posts/" + no;
+    }
+
+    @GetMapping("/posts/{no}/delete")
+    public String deletePost(@PathVariable("no") Long no) {
+        postService.deletePost(no);
+        return "redirect:/posts";
+    }
 }

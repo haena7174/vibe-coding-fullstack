@@ -108,6 +108,17 @@
                         <span class="material-symbols-outlined text-sm">visibility</span>
                         <span th:text="${post.views}">123</span>
                     </span>
+                    <a th:href="@{/posts/{no}/edit(no=${post.no})}"
+                        class="px-4 py-2 bg-primary text-white rounded-xl text-xs font-bold flex items-center gap-1 hover:scale-105 transition-all">
+                        <span class="material-symbols-outlined text-sm">edit</span>
+                        Edit
+                    </a>
+                    <a th:href="@{/posts/{no}/delete(no=${post.no})}"
+                        class="px-4 py-2 bg-rose-500 text-white rounded-xl text-xs font-bold flex items-center gap-1 hover:scale-105 transition-all"
+                        onclick="return confirm('정말 삭제하시겠습니까?');">
+                        <span class="material-symbols-outlined text-sm">delete</span>
+                        Delete
+                    </a>
                 </div>
             </div>
 
