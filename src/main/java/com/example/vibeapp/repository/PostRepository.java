@@ -30,6 +30,18 @@ public class PostRepository {
                 .toList();
     }
 
+    public long count() {
+        return posts.size();
+    }
+
+    public List<Post> findPage(int offset, int limit) {
+        return posts.stream()
+                .sorted((p1, p2) -> p2.getNo().compareTo(p1.getNo()))
+                .skip(offset)
+                .limit(limit)
+                .toList();
+    }
+
     public Post findById(Long no) {
         return posts.stream()
                 .filter(post -> post.getNo().equals(no))

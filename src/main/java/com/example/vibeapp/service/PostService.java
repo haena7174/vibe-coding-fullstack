@@ -19,6 +19,15 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    public long getTotalCount() {
+        return postRepository.count();
+    }
+
+    public List<Post> getPostsPage(int page, int size) {
+        int offset = (page - 1) * size;
+        return postRepository.findPage(offset, size);
+    }
+
     public Post getPost(Long no) {
         return postRepository.findById(no);
     }

@@ -139,6 +139,34 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Pagination -->
+            <div th:if="${totalPages > 1}" class="mt-12 flex justify-center">
+                <nav class="flex items-center gap-2">
+                    <!-- Previous Page -->
+                    <a th:href="@{/posts(page=${currentPage - 1})}" th:if="${currentPage > 1}"
+                        class="w-12 h-12 flex items-center justify-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-slate-500 hover:text-primary hover:border-primary/30 transition-all font-bold shadow-sm">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                    </a>
+
+                    <!-- Page Numbers -->
+                    <div class="flex items-center gap-2 px-2">
+                        <th:block th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
+                            <a th:href="@{/posts(page=${pageNum})}"
+                                th:class="${pageNum == currentPage} ? 
+                                    'w-12 h-12 flex items-center justify-center rounded-2xl bg-primary text-white font-black shadow-lg shadow-primary/25' : 
+                                    'w-12 h-12 flex items-center justify-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-slate-500 hover:text-primary hover:border-primary/30 transition-all font-bold shadow-sm'"
+                                th:text="${pageNum}">1</a>
+                        </th:block>
+                    </div>
+
+                    <!-- Next Page -->
+                    <a th:href="@{/posts(page=${currentPage + 1})}" th:if="${currentPage < totalPages}"
+                        class="w-12 h-12 flex items-center justify-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-slate-500 hover:text-primary hover:border-primary/30 transition-all font-bold shadow-sm">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </a>
+                </nav>
+            </div>
         </main>
 
         <!-- Footer (Simplified) -->
