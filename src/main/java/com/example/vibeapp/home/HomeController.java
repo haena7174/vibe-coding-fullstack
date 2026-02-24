@@ -1,4 +1,4 @@
-package com.example.vibeapp;
+package com.example.vibeapp.home;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
