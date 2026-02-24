@@ -25,7 +25,7 @@ public class PostRepository {
 
     public List<Post> findAll() {
         return posts.stream()
-                .sorted((p1, p2) -> p2.getNo().compareTo(p1.getNo()))
+                .sorted((p1, p2) -> p2.getId().compareTo(p1.getId()))
                 .toList();
     }
 
@@ -35,15 +35,15 @@ public class PostRepository {
 
     public List<Post> findPage(int offset, int limit) {
         return posts.stream()
-                .sorted((p1, p2) -> p2.getNo().compareTo(p1.getNo()))
+                .sorted((p1, p2) -> p2.getId().compareTo(p1.getId()))
                 .skip(offset)
                 .limit(limit)
                 .toList();
     }
 
-    public Post findById(Long no) {
+    public Post findById(Long id) {
         return posts.stream()
-                .filter(post -> post.getNo().equals(no))
+                .filter(post -> post.getId().equals(id))
                 .findFirst()
                 .map(post -> {
                     post.setViews(post.getViews() + 1);
@@ -54,14 +54,14 @@ public class PostRepository {
 
     public void save(Post post) {
         long nextId = posts.stream()
-                .mapToLong(Post::getNo)
+                .mapToLong(Post::getId)
                 .max()
                 .orElse(0L) + 1;
-        post.setNo(nextId);
+        post.setId(nextId);
         posts.add(post);
     }
 
-    public void deleteById(Long no) {
-        posts.removeIf(post -> post.getNo().equals(no));
+    public void deleteById(Long id) {
+        posts.removeIf(post -> post.getId().equals(id));
     }
 }

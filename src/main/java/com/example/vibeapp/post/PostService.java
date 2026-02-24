@@ -13,10 +13,6 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
-    }
-
     public long getTotalCount() {
         return postRepository.count();
     }
@@ -26,8 +22,8 @@ public class PostService {
         return postRepository.findPage(offset, size);
     }
 
-    public Post getPost(Long no) {
-        return postRepository.findById(no);
+    public Post getPost(Long id) {
+        return postRepository.findById(id);
     }
 
     public void createPost(String title, String content) {
@@ -40,8 +36,8 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public void updatePost(Long no, String title, String content) {
-        Post post = postRepository.findById(no);
+    public void updatePost(Long id, String title, String content) {
+        Post post = postRepository.findById(id);
         if (post != null) {
             post.setTitle(title);
             post.setContent(content);
@@ -49,7 +45,7 @@ public class PostService {
         }
     }
 
-    public void deletePost(Long no) {
-        postRepository.deleteById(no);
+    public void deletePost(Long id) {
+        postRepository.deleteById(id);
     }
 }

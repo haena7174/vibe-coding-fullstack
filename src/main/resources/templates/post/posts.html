@@ -122,9 +122,9 @@
                     </thead>
                     <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                         <tr th:each="post : ${posts}" class="hover:bg-primary/5 transition-colors group">
-                            <td class="px-8 py-6 font-bold text-slate-400" th:text="${post.no}">1</td>
+                            <td class="px-8 py-6 font-bold text-slate-400" th:text="${post.id}">1</td>
                             <td class="px-8 py-6">
-                                <a th:href="@{/posts/{no}(no=${post.no})}"
+                                <a th:href="@{/posts/{id}(id=${post.id})}"
                                     class="text-lg font-bold group-hover:text-primary transition-colors"
                                     th:text="${post.title}">Post Title</a>
                             </td>
