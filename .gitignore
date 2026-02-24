@@ -12,3 +12,13 @@ bin/
 # OS
 .DS_Store
 Thumbs.db
+
+# Logs
+logs/
+*.log
+*_output.txt
+
+# Data
+/data/
+*.mv.db
+*.trace.db

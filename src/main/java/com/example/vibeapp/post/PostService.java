@@ -31,7 +31,11 @@ public class PostService {
 
     public PostResponseDTO getPost(Long id) {
         Post post = postRepository.findById(id);
-        return (post != null) ? PostResponseDTO.from(post) : null;
+        if (post != null) {
+            postRepository.incrementViews(id);
+            return PostResponseDTO.from(post);
+        }
+        return null;
     }
 
     public void createPost(PostCreateDto createDto) {
@@ -44,6 +48,7 @@ public class PostService {
         if (post != null) {
             updateDto.updateEntity(post);
             post.setUpdatedAt(LocalDateTime.now());
+            postRepository.update(post);
         }
     }
 
