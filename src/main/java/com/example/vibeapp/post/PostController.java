@@ -5,18 +5,19 @@ import com.example.vibeapp.post.dto.PostListDto;
 import com.example.vibeapp.post.dto.PostResponseDTO;
 import com.example.vibeapp.post.dto.PostUpdateDto;
 import jakarta.validation.Valid;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+/**
+ * REST API Controller for Post management (CSR 방식)
+ */
+@RestController
+@RequestMapping("/api/posts")
 public class PostController {
     private final PostService postService;
 
@@ -24,72 +25,52 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/posts")
-    public String listPosts(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+    @GetMapping
+    public ResponseEntity<Map<String, Object>> listPosts(@RequestParam(value = "page", defaultValue = "1") int page) {
         int pageSize = 5;
         List<PostListDto> posts = postService.getPostsPage(page, pageSize);
         long totalCount = postService.getTotalCount();
         int totalPages = (int) Math.ceil((double) totalCount / pageSize);
 
-        model.addAttribute("posts", posts);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", totalPages);
-        return "post/posts";
+        Map<String, Object> response = new HashMap<>();
+        response.put("posts", posts);
+        response.put("currentPage", page);
+        response.put("totalPages", totalPages);
+        response.put("totalCount", totalCount);
+
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/posts/{id}")
-    public String viewPost(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/{id}")
+    public ResponseEntity<PostResponseDTO> viewPost(@PathVariable("id") Long id) {
         PostResponseDTO post = postService.getPost(id);
         if (post == null) {
-            return "redirect:/posts";
+            return ResponseEntity.notFound().build();
         }
-        model.addAttribute("post", post);
-        model.addAttribute("tags", postService.getTagsByPostId(id));
-        return "post/post_detail";
+        return ResponseEntity.ok(post);
     }
 
-    @GetMapping("/posts/new")
-    public String createPostForm(Model model) {
-        model.addAttribute("postCreateDto", new PostCreateDto());
-        return "post/post_new_form";
-    }
-
-    @PostMapping("/posts/add")
-    public String createPost(@Valid @ModelAttribute("postCreateDto") PostCreateDto createDto,
-            BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "post/post_new_form";
-        }
+    @PostMapping
+    public ResponseEntity<Void> createPost(@Valid @RequestBody PostCreateDto createDto) {
         postService.createPost(createDto);
-        return "redirect:/posts";
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/posts/{id}/edit")
-    public String editPostForm(@PathVariable("id") Long id, Model model) {
-        PostUpdateDto updateDto = postService.getPostForEdit(id);
-        if (updateDto == null) {
-            return "redirect:/posts";
-        }
-        model.addAttribute("postUpdateDto", updateDto);
-        model.addAttribute("postId", id);
-        return "post/post_edit_form";
-    }
-
-    @PostMapping("/posts/{id}/save")
-    public String updatePost(@PathVariable("id") Long id,
-            @Valid @ModelAttribute("postUpdateDto") PostUpdateDto updateDto,
-            BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("postId", id);
-            return "post/post_edit_form";
-        }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updatePost(@PathVariable("id") Long id,
+            @Valid @RequestBody PostUpdateDto updateDto) {
         postService.updatePost(id, updateDto);
-        return "redirect:/posts/" + id;
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/posts/{id}/delete")
-    public String deletePost(@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable("id") Long id) {
         postService.deletePost(id);
-        return "redirect:/posts";
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/tags")
+    public ResponseEntity<List<PostTag>> getTags(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(postService.getTagsByPostId(id));
     }
 }

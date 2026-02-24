@@ -32,7 +32,9 @@ public class PostService {
                 .toList();
     }
 
+    @Transactional
     public PostResponseDTO getPost(Long id) {
+        // JPA의 findById를 통해 영속 상태로 조회. 트랜잭션 내에서 views를 변경하면 Dirty Checking으로 자동 업데이트됨.
         Post post = postRepository.findById(id);
         if (post != null) {
             postRepository.incrementViews(id);
@@ -43,6 +45,7 @@ public class PostService {
 
     @Transactional
     public void createPost(PostCreateDto createDto) {
+        // 엔티티를 생성하고 영속화함
         Post post = createDto.toEntity();
         postRepository.save(post);
         saveTags(post.getId(), createDto.tags());
@@ -50,6 +53,7 @@ public class PostService {
 
     @Transactional
     public void updatePost(Long id, PostUpdateDto updateDto) {
+        // 조회 후 필드를 변경하면 트랜잭션 종료 시점에 변경 감지가 동작하여 UPDATE 쿼리가 실행됨
         Post post = postRepository.findById(id);
         if (post != null) {
             updateDto.updateEntity(post);
@@ -74,7 +78,9 @@ public class PostService {
         return postTagRepository.findByPostNo(postId);
     }
 
+    @Transactional
     public void deletePost(Long id) {
+        // 벌크 삭제 및 엔티티 삭제를 위해 트랜잭션 필요
         postTagRepository.deleteByPostNo(id);
         postRepository.deleteById(id);
     }
